@@ -11,7 +11,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,11 +23,12 @@ import java.util.List;
 @RequestMapping("/api/v1/projects")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @Tag(name = "Proyectos", description = "Tableros tipo Trello - colaboración en proyectos")
-@RequiredArgsConstructor
 public class ProjectController {
 
-    private final ProjectService projectService;
-    private final AuthService authService;
+    @Autowired
+    private ProjectService projectService;
+    @Autowired
+    private AuthService authService;
 
     @PostMapping
     @Operation(summary = "Crear proyecto", security = @SecurityRequirement(name = "bearerAuth"))

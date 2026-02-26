@@ -7,7 +7,7 @@ import com.davivienda.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/auth")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @Tag(name = "Autenticación", description = "Registro e inicio de sesión con JWT")
-@RequiredArgsConstructor
 public class AuthController {
 
-    private final AuthService authService;
+    @Autowired
+    private AuthService authService;
 
     @Operation(summary = "Registrar usuario", description = "Crea un nuevo usuario y devuelve un token JWT")
     @PostMapping("/register")

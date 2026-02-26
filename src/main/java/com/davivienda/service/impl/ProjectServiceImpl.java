@@ -12,7 +12,7 @@ import com.davivienda.repository.ProjectRepository;
 import com.davivienda.repository.UserRepository;
 import com.davivienda.service.BoardListService;
 import com.davivienda.service.ProjectService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,13 +21,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class ProjectServiceImpl implements ProjectService {
 
-    private final ProjectRepository projectRepository;
-    private final ProjectMemberRepository projectMemberRepository;
-    private final UserRepository userRepository;
-    private final BoardListService boardListService;
+    @Autowired
+    private ProjectRepository projectRepository;
+    @Autowired
+    private ProjectMemberRepository projectMemberRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private BoardListService boardListService;
 
     @Override
     @Transactional

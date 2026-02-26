@@ -11,7 +11,7 @@ import com.davivienda.repository.CardRepository;
 import com.davivienda.repository.ProjectMemberRepository;
 import com.davivienda.repository.UserRepository;
 import com.davivienda.service.CardService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,13 +21,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class CardServiceImpl implements CardService {
 
-    private final CardRepository cardRepository;
-    private final BoardListRepository boardListRepository;
-    private final ProjectMemberRepository projectMemberRepository;
-    private final UserRepository userRepository;
+    @Autowired
+    private CardRepository cardRepository;
+    @Autowired
+    private BoardListRepository boardListRepository;
+    @Autowired
+    private ProjectMemberRepository projectMemberRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     @Transactional

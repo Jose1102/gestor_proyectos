@@ -10,7 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,11 +22,12 @@ import java.util.List;
 @RequestMapping("/api/v1/projects/{projectId}/lists")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @Tag(name = "Listas", description = "Columnas del tablero")
-@RequiredArgsConstructor
 public class BoardListController {
 
-    private final BoardListService boardListService;
-    private final AuthService authService;
+    @Autowired
+    private BoardListService boardListService;
+    @Autowired
+    private AuthService authService;
 
     @PostMapping
     @Operation(summary = "Crear lista", security = @SecurityRequirement(name = "bearerAuth"))
