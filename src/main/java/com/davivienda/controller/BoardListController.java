@@ -21,15 +21,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/projects/{projectId}/lists")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-@Tag(name = "Listas", description = "Columnas del tablero (Por hacer, En progreso, Hecho)")
+@Tag(name = "Listas", description = "Columnas del tablero")
 @RequiredArgsConstructor
 public class BoardListController {
 
     private final BoardListService boardListService;
     private final AuthService authService;
 
-    @Operation(summary = "Crear lista", security = @SecurityRequirement(name = "bearerAuth"))
     @PostMapping
+    @Operation(summary = "Crear lista", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<BoardListDTO> create(
             @AuthenticationPrincipal UserPrincipal principal,
             @PathVariable Long projectId,
@@ -39,9 +39,8 @@ public class BoardListController {
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
-    @Operation(summary = "Listar columnas", description = "Obtiene las listas del proyecto con sus tarjetas",
-            security = @SecurityRequirement(name = "bearerAuth"))
     @GetMapping
+    @Operation(summary = "Listar listas", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<List<BoardListDTO>> list(
             @AuthenticationPrincipal UserPrincipal principal,
             @PathVariable Long projectId) {
@@ -49,8 +48,8 @@ public class BoardListController {
         return ResponseEntity.ok(boardListService.findByProjectId(projectId, user));
     }
 
-    @Operation(summary = "Actualizar lista", security = @SecurityRequirement(name = "bearerAuth"))
     @PutMapping("/{listId}")
+    @Operation(summary = "Actualizar lista", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<BoardListDTO> update(
             @AuthenticationPrincipal UserPrincipal principal,
             @PathVariable Long projectId,
@@ -60,8 +59,8 @@ public class BoardListController {
         return ResponseEntity.ok(boardListService.update(listId, user, request.getTitle(), request.getPosition()));
     }
 
-    @Operation(summary = "Eliminar lista", security = @SecurityRequirement(name = "bearerAuth"))
     @DeleteMapping("/{listId}")
+    @Operation(summary = "Eliminar lista", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<Void> delete(
             @AuthenticationPrincipal UserPrincipal principal,
             @PathVariable Long projectId,

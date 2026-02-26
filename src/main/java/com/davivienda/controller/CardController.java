@@ -29,8 +29,8 @@ public class CardController {
     private final CardService cardService;
     private final AuthService authService;
 
-    @Operation(summary = "Crear tarjeta", security = @SecurityRequirement(name = "bearerAuth"))
     @PostMapping
+    @Operation(summary = "Crear tarjeta", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<CardDTO> create(
             @AuthenticationPrincipal UserPrincipal principal,
             @PathVariable Long listId,
@@ -43,8 +43,8 @@ public class CardController {
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
-    @Operation(summary = "Listar tarjetas", security = @SecurityRequirement(name = "bearerAuth"))
     @GetMapping
+    @Operation(summary = "Listar tarjetas", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<List<CardDTO>> list(
             @AuthenticationPrincipal UserPrincipal principal,
             @PathVariable Long listId) {
@@ -52,8 +52,8 @@ public class CardController {
         return ResponseEntity.ok(cardService.findByListId(listId, user));
     }
 
-    @Operation(summary = "Actualizar tarjeta", security = @SecurityRequirement(name = "bearerAuth"))
     @PutMapping("/{cardId}")
+    @Operation(summary = "Actualizar tarjeta", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<CardDTO> update(
             @AuthenticationPrincipal UserPrincipal principal,
             @PathVariable Long listId,
@@ -66,9 +66,8 @@ public class CardController {
                 request.getAssigneeId(), request.getDueDate()));
     }
 
-    @Operation(summary = "Mover tarjeta", description = "Mueve la tarjeta a otra lista del mismo proyecto",
-            security = @SecurityRequirement(name = "bearerAuth"))
     @PostMapping("/{cardId}/move")
+    @Operation(summary = "Mover tarjeta", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<CardDTO> move(
             @AuthenticationPrincipal UserPrincipal principal,
             @PathVariable Long listId,
@@ -78,8 +77,8 @@ public class CardController {
         return ResponseEntity.ok(cardService.move(cardId, request.getTargetListId(), request.getNewPosition(), user));
     }
 
-    @Operation(summary = "Eliminar tarjeta", security = @SecurityRequirement(name = "bearerAuth"))
     @DeleteMapping("/{cardId}")
+    @Operation(summary = "Eliminar tarjeta", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<Void> delete(
             @AuthenticationPrincipal UserPrincipal principal,
             @PathVariable Long listId,

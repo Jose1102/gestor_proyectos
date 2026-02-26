@@ -53,6 +53,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ProjectDTO> findByUser(User user) {
         List<ProjectMember> memberships = projectMemberRepository.findByUserWithProject(user);
         return memberships.stream()

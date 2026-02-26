@@ -29,9 +29,8 @@ public class ProjectController {
     private final ProjectService projectService;
     private final AuthService authService;
 
-    @Operation(summary = "Crear proyecto", description = "Crea un tablero y te añade como propietario",
-            security = @SecurityRequirement(name = "bearerAuth"))
     @PostMapping
+    @Operation(summary = "Crear proyecto", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<ProjectDTO> create(
             @AuthenticationPrincipal UserPrincipal principal,
             @Valid @RequestBody CreateProjectRequest request) {
@@ -40,17 +39,15 @@ public class ProjectController {
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
-    @Operation(summary = "Mis proyectos", description = "Lista los proyectos donde participas",
-            security = @SecurityRequirement(name = "bearerAuth"))
     @GetMapping
+    @Operation(summary = "Mis proyectos", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<List<ProjectDTO>> list(@AuthenticationPrincipal UserPrincipal principal) {
         User user = authService.getCurrentUser(principal.getEmail());
         return ResponseEntity.ok(projectService.findByUser(user));
     }
 
-    @Operation(summary = "Ver proyecto", description = "Obtiene un proyecto con sus listas y tarjetas",
-            security = @SecurityRequirement(name = "bearerAuth"))
     @GetMapping("/{id}")
+    @Operation(summary = "Ver proyecto", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<ProjectDTO> getById(
             @AuthenticationPrincipal UserPrincipal principal,
             @PathVariable Long id) {
@@ -58,8 +55,8 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.getById(id, user));
     }
 
-    @Operation(summary = "Actualizar proyecto", security = @SecurityRequirement(name = "bearerAuth"))
     @PutMapping("/{id}")
+    @Operation(summary = "Actualizar proyecto", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<ProjectDTO> update(
             @AuthenticationPrincipal UserPrincipal principal,
             @PathVariable Long id,
@@ -68,9 +65,8 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.update(id, user, request.getName(), request.getDescription()));
     }
 
-    @Operation(summary = "Eliminar proyecto", description = "Solo el propietario puede eliminar",
-            security = @SecurityRequirement(name = "bearerAuth"))
     @DeleteMapping("/{id}")
+    @Operation(summary = "Eliminar proyecto", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<Void> delete(
             @AuthenticationPrincipal UserPrincipal principal,
             @PathVariable Long id) {
@@ -79,9 +75,8 @@ public class ProjectController {
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "Añadir miembro", description = "Añade un usuario al proyecto por email (solo propietario)",
-            security = @SecurityRequirement(name = "bearerAuth"))
     @PostMapping("/{id}/members")
+    @Operation(summary = "Añadir miembro", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<Void> addMember(
             @AuthenticationPrincipal UserPrincipal principal,
             @PathVariable Long id,
@@ -91,9 +86,8 @@ public class ProjectController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @Operation(summary = "Eliminar miembro", description = "Quita un usuario del proyecto (solo propietario)",
-            security = @SecurityRequirement(name = "bearerAuth"))
     @DeleteMapping("/{projectId}/members/{userId}")
+    @Operation(summary = "Eliminar miembro", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<Void> removeMember(
             @AuthenticationPrincipal UserPrincipal principal,
             @PathVariable Long projectId,

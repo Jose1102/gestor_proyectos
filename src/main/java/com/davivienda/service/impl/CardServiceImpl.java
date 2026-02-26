@@ -1,5 +1,6 @@
 package com.davivienda.service.impl;
 
+import com.davivienda.dto.CardDTO;
 import com.davivienda.exception.BadResourceRequestException;
 import com.davivienda.exception.NoSuchResourceFoundException;
 import com.davivienda.model.BoardList;
@@ -10,7 +11,6 @@ import com.davivienda.repository.CardRepository;
 import com.davivienda.repository.ProjectMemberRepository;
 import com.davivienda.repository.UserRepository;
 import com.davivienda.service.CardService;
-import com.davivienda.dto.CardDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
